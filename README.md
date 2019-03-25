@@ -1,2 +1,3 @@
 # RevisR
-COMP208
+COMP208 Team 55
+Be sure to get GitHub Student
