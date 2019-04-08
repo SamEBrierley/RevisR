@@ -1,0 +1,292 @@
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+
+public class guiBuild 
+{
+
+	private JFrame frame, fpframe, homeFrame, reviseFrame;
+	private JTextField textField;
+	private JPasswordField passwordField;
+	private JButton loginButton, fpButton, reviseButton, homeworkButton, button, topicsButton, mockTestButton, resultsButton, createAccountButton, createAssignmentButton;
+	private Font font1 = new Font("MS PMincho", Font.BOLD, 32);
+	private Font font2 = new Font("MS PMincho", Font.BOLD, 60);
+	private Image img3 = new ImageIcon(this.getClass().getResource("/giffy.gif")).getImage();	
+
+
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
+					guiBuild window = new guiBuild();
+					window.frame.setVisible(true);
+				} 
+				catch (Exception e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public guiBuild() 
+	{
+		initialize();
+	}
+
+	private void initialize() 
+	{
+		Image img = new ImageIcon(this.getClass().getResource("/Login_Screen.png")).getImage();
+		frame = new JFrame();
+		frame.setResizable(false);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		JLabel label_1 = new JLabel(new ImageIcon(img));
+		frame.setContentPane(label_1);
+		frame.setLayout(null);
+        
+		textField = new JTextField();
+		textField.setBounds(1400, 500, 450, 70);
+		textField.setFont(font1);
+		frame.getContentPane().add(textField);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(1400, 720, 450, 70);
+		passwordField.setFont(font1);
+		frame.getContentPane().add(passwordField);
+		
+		loginButton = makeBtn("Login", 1460, 840, 350, 70);
+		loginButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				String username = textField.getText();
+				validateUser(username, "pas");
+			}
+		});
+		frame.getContentPane().add(loginButton);
+		
+		fpButton = makeBtn("Forgotten Password", 1460, 940, 350, 70);
+		fpButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				ForgotPassword();
+				fpButton.setEnabled(false);
+			}
+		});
+		frame.getContentPane().add(fpButton);
+
+	}
+	public void ForgotPassword()
+	{
+		Image img2 = new ImageIcon(this.getClass().getResource("/fpScreen.png")).getImage();	
+		fpframe = new JFrame();  
+		fpframe.setSize(1300,1000);
+		JLabel label_1 = new JLabel(new ImageIcon(img2));
+		fpframe.setContentPane(label_1);
+		fpframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		fpframe.setResizable(false);
+		fpframe.setVisible(true);
+		fpframe.setTitle("Forgotten Password");
+	}
+	public void validateUser(String username, String password) {
+		
+		//include database validation
+		if(username.contains("Stu")) 
+		{		
+			runStudent();
+			frame.setVisible(false);
+		}
+		else if(username.contains("Par")) 
+		{
+			runParent();
+			frame.setVisible(false);
+		}
+		else if(username.contains("Tea"))
+		{
+			runTeacher();
+			frame.setVisible(false);
+		}
+		else 
+		{
+			JOptionPane.showMessageDialog(null, "Please enter a valid Username and Password");
+		}
+		
+	}
+	
+	public void runStudent() 
+	{
+		homeFrame = initHomeFrame();
+		
+		
+		reviseButton = makeBtn("REVISE", 760, 400, 350, 70);
+		reviseButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				homeFrame.setVisible(false);
+				reviseFrame();
+			}
+		});
+		homeFrame.getContentPane().add(reviseButton);
+		
+		homeworkButton = makeBtn("HOMEWORK", 760, 550, 350, 70);
+		homeworkButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				homeFrame.setVisible(false);
+				reviseFrame();
+			}
+		});
+		homeFrame.getContentPane().add(homeworkButton);
+		
+		resultsButton = makeBtn("RESULTS", 760, 700, 350, 70);
+		resultsButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				//ADD CODE HERE
+			}
+		});
+		homeFrame.getContentPane().add(resultsButton);
+	}
+	
+	public void runParent() 
+	{
+		homeFrame = initHomeFrame();
+		resultsButton = makeBtn("RESULTS", 760, 550, 350, 70);
+		resultsButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				//ADD CODE HERE
+			}
+		});
+		homeFrame.getContentPane().add(resultsButton);
+	}
+
+	public void runTeacher() 
+	{
+		homeFrame = initHomeFrame();
+		
+		createAssignmentButton = makeBtn("CREATE ASSIGNMENTS", 760, 400, 410, 70);
+		createAssignmentButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				//ADD CODE HERE
+			}
+		});
+		homeFrame.getContentPane().add(createAssignmentButton);
+		
+		resultsButton = makeBtn("RESULTS", 760, 550, 410, 70);
+		resultsButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				//ADD CODE HERE
+			}
+		});
+		homeFrame.getContentPane().add(resultsButton);
+		
+		createAccountButton = makeBtn("CREATE ACCOUNTS", 760, 700, 410, 70);
+		createAccountButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				//ADD CODE HERE
+			}
+		});
+		homeFrame.getContentPane().add(createAccountButton);
+
+	}	
+	
+	
+	public JButton makeBtn(String text, int x, int y, int l, int w)
+	{
+		button = new JButton();
+		button.setBounds(x, y, l, w); //standard l and w is 350 and 70
+		button.setFont(font1);
+		button.setText(text);
+		return button;
+	}
+	
+	
+	public JFrame initHomeFrame()
+	{
+		homeFrame = new JFrame();  
+		JLabel label_1 = new JLabel(new ImageIcon(img3));
+		homeFrame.setContentPane(label_1);
+		homeFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		homeFrame.setResizable(true);
+		homeFrame.setVisible(true);
+		homeFrame.setLayout(null);
+		homeFrame.setTitle("RevisR");
+		JLabel welcome = new JLabel();
+		welcome.setBounds(730, 200, 1200, 70);
+		welcome.setFont(font2);
+		welcome.setBackground(Color.black);
+		welcome.setForeground(Color.white);
+		welcome.setText("Welcome Back !");
+		homeFrame.getContentPane().add(welcome);
+		return homeFrame;
+	}
+	public JFrame reviseFrame()
+	{
+		reviseFrame = new JFrame();  
+		JLabel label_1 = new JLabel(new ImageIcon(img3));
+		reviseFrame.setContentPane(label_1);
+		reviseFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		reviseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		reviseFrame.setResizable(true);
+		reviseFrame.setVisible(true);
+		reviseFrame.setLayout(null);
+		reviseFrame.setTitle("RevisR");
+		JLabel welcome = new JLabel();
+		welcome.setBounds(350, 200, 1200, 150);
+		welcome.setFont(font2);
+		welcome.setBackground(Color.black);
+		welcome.setForeground(Color.white);
+		welcome.setText("<html><center>Please select the type of revision you want to do.</html>");
+		reviseFrame.getContentPane().add(welcome);
+		topicsButton = makeBtn("Select Topics", 760, 550, 350, 70);
+		topicsButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				System.out.println("hi");
+			}
+		});
+		reviseFrame.getContentPane().add(topicsButton);
+		
+		mockTestButton = makeBtn("Generate Mock Test", 760, 400, 350, 70);
+		mockTestButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				System.out.println("hello");
+			}
+		});
+		reviseFrame.getContentPane().add(mockTestButton);
+		return reviseFrame;
+	}
+
+}
